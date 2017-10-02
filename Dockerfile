@@ -5,16 +5,15 @@ WORKDIR /iri
 RUN git clone -b v1.3.2 https://github.com/iotaledger/iri.git /iri/
 RUN mvn clean package
 
-COPY conf /iri/conf
+COPY conf/* /iri/conf/
 COPY /docker-entrypoint.sh /
+
+ENV MEMORY 2G
 
 WORKDIR /iri/data
 
 VOLUME /iri/data
-
-EXPOSE 14265
-EXPOSE 14777/udp
-EXPOSE 15777
+VOLUME /iri/conf
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
